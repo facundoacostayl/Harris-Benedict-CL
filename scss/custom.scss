@@ -1,0 +1,17 @@
+$font-family-sans-serif: 'Roboto', sans-serif;
+$primary: #FFEFEF;
+$secondary: #D3DEDC;
+$info: #92A9BD;
+$bg-color: #7C99AC;
+$dark: #18202D;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 720px,
+  xl: 720px,
+  xxl: 720px
+) !default;
+
+
+@import "../node_modules/bootstrap/scss/bootstrap";
