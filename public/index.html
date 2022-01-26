@@ -14,18 +14,23 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!--SASS-->
     <link rel="stylesheet" href="/scss/custom.css">
+    <!--SCRIPT-->
+    <script type="module" defer src="./js/main.js"></script>
     <title>Document</title>
 </head>
 
 <body>
     <main class="container mt-5">
         <h1 class="text-center">Harris Benedict CL</h1>
-        <form class="row g-3 pt-5" action="">
+        <form id="form" class="row g-3 pt-5" action="">
             <div class="col-md-6 text-center">
                 <label for="sexo">Sexo</label>
             </div>
             <div class="col-md-6">
-                <input class="form-control" id="sexo" type="text">
+                <select class="form-control text-center" name="sexo" id="sexo">
+                    <option value="hombre">Hombre</option>
+                    <option value="mujer">Mujer</option>
+                </select>
             </div>
             <div class="col-8 text-center">
                 <label for="peso">Peso</label>
@@ -34,12 +39,12 @@
                 <label for="tipo-de-peso">Tipo</label>
             </div>
             <div class="col-8">
-                <input class="form-control" id="peso" type="text">
+                <input class="form-control" id="peso" type="number">
             </div>
             <div class="col-4">
                 <select class="form-control" name="tipoDePeso" id="tipo-de-peso">
-                    <option value="kg">Kilos</option>
-                    <option value="lb">Libras</option>
+                    <option value="kilos">Kilos</option>
+                    <option value="libras">Libras</option>
                 </select>
             </div>
             <div class="col-8 text-center">
@@ -49,7 +54,7 @@
                 <label for="tipo-de-medida">Medida</label>
             </div>
             <div class="col-8">
-                <input class="form-control" id="estatura" type="text">
+                <input class="form-control" id="estatura" type="number">
             </div>
             <div class="col-4">
                 <select class="form-control" name="tipoDePeso" id="tipo-de-medida">
@@ -61,7 +66,7 @@
                 <label for="edad">Edad</label>
             </div>
             <div class="col-md-6">
-                <input class="form-control" id="edad" type="text">
+                <input class="form-control" id="edad" type="number">
             </div>
             <div class="col-md-6 text-center">
                 <label for="actividad">Nivel de Actividad</label>
@@ -74,6 +79,9 @@
                     <option value="intensa">Actividad Intensa</option>
                     <option value="muy-intensa">Actividad Muy Intensa</option>
                 </select>
+            </div>
+            <div class="col-12">
+                <input id="submit" type="submit" value="Calcular">
             </div>
         </form>
     </main>
