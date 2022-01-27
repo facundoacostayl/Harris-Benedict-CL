@@ -11,7 +11,8 @@ let estatura: HTMLInputElement;
 let feet: HTMLInputElement; let inches: HTMLInputElement;
 const tipoDeMedida = document.querySelector('#tipo-de-medida') as HTMLSelectElement;
 const edad = document.querySelector('#edad') as HTMLInputElement;
-const actividad = document.querySelector('#actividad') as HTMLSelectElement
+const actividad = document.querySelector('#actividad') as HTMLSelectElement;
+const objetivo = document.querySelector('#objetivo') as HTMLSelectElement;
 
 if (tipoDeMedida.value === "cm") {
     estatura = document.querySelector('#estatura') as HTMLInputElement;
@@ -37,7 +38,9 @@ form.addEventListener('submit', (e: Event) => {
         user = new Mujer(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value)
     }
 
-    const calculate = new Calculator(user.calculate());
+    const calculator = new Calculator(user.calculate());
+    const rmb = calculator.calculateRmb();
+    const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
 
-    console.log(calculate.calculate())
+    console.log(Math.round(objetivoCalories));
 })

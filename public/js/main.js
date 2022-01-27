@@ -11,6 +11,7 @@ let inches;
 const tipoDeMedida = document.querySelector('#tipo-de-medida');
 const edad = document.querySelector('#edad');
 const actividad = document.querySelector('#actividad');
+const objetivo = document.querySelector('#objetivo');
 if (tipoDeMedida.value === "cm") {
     estatura = document.querySelector('#estatura');
 }
@@ -31,6 +32,8 @@ form.addEventListener('submit', (e) => {
     else {
         user = new Mujer(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value);
     }
-    const calculate = new Calculator(user.calculate());
-    console.log(calculate.calculate());
+    const calculator = new Calculator(user.calculate());
+    const rmb = calculator.calculateRmb();
+    const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
+    console.log(Math.round(objetivoCalories));
 });

@@ -2,7 +2,7 @@ export class Calculator {
     constructor(data) {
         this.data = data;
     }
-    calculate() {
+    calculateRmb() {
         const data = this.data;
         let valueOfActividad = 0;
         switch (data[4]) {
@@ -26,5 +26,18 @@ export class Calculator {
         let sumOfDataMinusEdad = sumOfData - data[3];
         let rmb = sumOfDataMinusEdad * valueOfActividad;
         return rmb;
+    }
+    calculateGoals(objetivo, rmb) {
+        let goal;
+        if (objetivo === "mantener") {
+            goal = rmb;
+        }
+        else if (objetivo === "bajar") {
+            goal = rmb - 500;
+        }
+        else {
+            goal = rmb + 200;
+        }
+        return goal;
     }
 }
