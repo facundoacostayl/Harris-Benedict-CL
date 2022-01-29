@@ -2,8 +2,10 @@ import { Hombre } from './classes/Hombre.js';
 import { Mujer } from './classes/Mujer.js';
 import { Calculator } from './classes/Calculator.js';
 import { HasCalculate } from './interfases/HasCalculate.js';
+import { Displayer } from './classes/Displayer.js'
 
-const form = document.querySelector('#form') as HTMLFormElement;
+const container = document.querySelector('#form') as HTMLDivElement;
+const form = document.querySelector('form') as HTMLFormElement;
 const sexo = document.querySelector('#sexo') as HTMLSelectElement;
 const peso = document.querySelector('#peso') as HTMLInputElement;
 const tipoDePeso = document.querySelector('#tipo-de-peso') as HTMLSelectElement;
@@ -40,7 +42,10 @@ form.addEventListener('submit', (e: Event) => {
 
     const calculator = new Calculator(user.calculate());
     const rmb = calculator.calculateRmb();
+    console.log(rmb)
     const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
+    const displayer = new Displayer(container, objetivoCalories, objetivo.value);
 
-    console.log(Math.round(objetivoCalories));
+    displayer.display();
+    
 })

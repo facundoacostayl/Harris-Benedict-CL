@@ -1,7 +1,9 @@
 import { Hombre } from './classes/Hombre.js';
 import { Mujer } from './classes/Mujer.js';
 import { Calculator } from './classes/Calculator.js';
-const form = document.querySelector('#form');
+import { Displayer } from './classes/Displayer.js';
+const container = document.querySelector('#form');
+const form = document.querySelector('form');
 const sexo = document.querySelector('#sexo');
 const peso = document.querySelector('#peso');
 const tipoDePeso = document.querySelector('#tipo-de-peso');
@@ -34,6 +36,8 @@ form.addEventListener('submit', (e) => {
     }
     const calculator = new Calculator(user.calculate());
     const rmb = calculator.calculateRmb();
+    console.log(rmb);
     const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
-    console.log(Math.round(objetivoCalories));
+    const displayer = new Displayer(container, objetivoCalories, objetivo.value);
+    displayer.display();
 });

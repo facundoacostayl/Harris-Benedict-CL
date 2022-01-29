@@ -7,25 +7,27 @@ export class Calculator {
         let valueOfActividad = 0;
         switch (data[4]) {
             case "sedentario":
-                valueOfActividad = 1;
+                valueOfActividad = 1.15;
                 break;
             case "ligera":
-                valueOfActividad = 1.2;
+                valueOfActividad = 1.35;
                 break;
             case "moderada":
-                valueOfActividad = 1.4;
+                valueOfActividad = 1.55;
                 break;
             case "intensta":
-                valueOfActividad = 1.6;
+                valueOfActividad = 1.75;
                 break;
             case "muy-intensa":
-                valueOfActividad = 1.8;
+                valueOfActividad = 1.95;
                 break;
         }
         let sumOfData = data[0] + data[1] + data[2];
         let sumOfDataMinusEdad = sumOfData - data[3];
-        let rmb = sumOfDataMinusEdad * valueOfActividad;
-        return rmb;
+        let rmbRounded = Math.round(sumOfDataMinusEdad * valueOfActividad);
+        console.log(sumOfData);
+        console.log(sumOfDataMinusEdad);
+        return rmbRounded;
     }
     calculateGoals(objetivo, rmb) {
         let goal;

@@ -12,18 +12,18 @@ export class Hombre implements HasCalculate {
 
     calculate(): [number, number, number, number, string] {
 
-        const pesoBase = 66.473;
+        const pesoBase = 66;
 
         let pesoCalc: number;
         if (this.tipo === "kilos") {
-            pesoCalc = this.peso * 13.752;
+            pesoCalc = this.peso * 13.7;
         } else {
-            pesoCalc = (this.peso / 2.2046) * 13.752;
+            pesoCalc = (this.peso / 2.2046) * 13.7;
         }
 
         let estaturaCalc: number;
         if (this.medida === "cm") {
-            estaturaCalc = this.estatura * 5.0033;
+            estaturaCalc = this.estatura * 5;
         } else {
             const arrayOfStrings: string[] = this.estatura.toString().split("");
             const arrayOfNumbers: number[] = arrayOfStrings.map(Number);
@@ -31,7 +31,7 @@ export class Hombre implements HasCalculate {
             estaturaCalc = (feetCalculated * 2.54) * 5.0033;
         }
 
-        const edadCalc: number = this.edad * 6.755;
+        const edadCalc: number = this.edad * 6.8;
 
         let rmb: [number, number, number, number, string] = [pesoBase, pesoCalc, estaturaCalc, edadCalc, this.actividad];
 
