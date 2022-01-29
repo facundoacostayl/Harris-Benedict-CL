@@ -24,8 +24,6 @@ export class Calculator {
         let sumOfDataMinusEdad: number = sumOfData - data[3];
         let rmbRounded = Math.round(sumOfDataMinusEdad * valueOfActividad);
 
-        console.log(sumOfData)
-        console.log(sumOfDataMinusEdad)
         return rmbRounded;
     }
 
@@ -34,9 +32,9 @@ export class Calculator {
         if (objetivo === "mantener") {
             goal = rmb;
         } else if(objetivo === "bajar") {
-            goal = rmb - 500;
+            goal = rmb - 327;
         } else {
-            goal = rmb + 350;
+            goal = rmb + 327;
         }
 
         return goal;

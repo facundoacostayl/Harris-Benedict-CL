@@ -25,18 +25,20 @@ export class Calculator {
         let sumOfData = data[0] + data[1] + data[2];
         let sumOfDataMinusEdad = sumOfData - data[3];
         let rmbRounded = Math.round(sumOfDataMinusEdad * valueOfActividad);
+        console.log(sumOfData);
+        console.log(sumOfDataMinusEdad);
         return rmbRounded;
     }
     calculateGoals(objetivo, rmb) {
         let goal;
         if (objetivo === "mantener") {
-            goal = rmb;
+            goal = rmb + 200;
         }
         else if (objetivo === "bajar") {
-            goal = rmb - 327;
+            goal = rmb - 2000;
         }
         else {
-            goal = rmb + 327;
+            goal = rmb + 2000;
         }
         return goal;
     }

@@ -1,7 +1,7 @@
 import { Hombre } from './classes/Hombre.js';
 import { Mujer } from './classes/Mujer.js';
 import { Calculator } from './classes/Calculator.js';
-import { HasCalculate } from './interfases/HasCalculate.js';
+import { HasCalculate } from './interfases/HasCalculate'
 import { Displayer } from './classes/Displayer.js'
 
 const container = document.querySelector('#form') as HTMLDivElement;

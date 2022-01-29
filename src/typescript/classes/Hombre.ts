@@ -1,4 +1,4 @@
-import { HasCalculate } from "../interfases/HasCalculate";
+import { HasCalculate } from "../interfases/HasCalculate"
 
 export class Hombre implements HasCalculate {
     constructor(
