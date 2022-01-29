@@ -6,6 +6,7 @@ import { Displayer } from './classes/Displayer.js'
 
 const container = document.querySelector('#form') as HTMLDivElement;
 const form = document.querySelector('form') as HTMLFormElement;
+const continueBtn = document.querySelector('.actividadBtn') as HTMLParagraphElement;
 const sexo = document.querySelector('#sexo') as HTMLSelectElement;
 const peso = document.querySelector('#peso') as HTMLInputElement;
 const tipoDePeso = document.querySelector('#tipo-de-peso') as HTMLSelectElement;
@@ -13,8 +14,8 @@ let estatura: HTMLInputElement;
 let feet: HTMLInputElement; let inches: HTMLInputElement;
 const tipoDeMedida = document.querySelector('#tipo-de-medida') as HTMLSelectElement;
 const edad = document.querySelector('#edad') as HTMLInputElement;
-const actividad = document.querySelector('#actividad') as HTMLSelectElement;
-const objetivo = document.querySelector('#objetivo') as HTMLSelectElement;
+let actividad: HTMLSelectElement;
+let objetivo: HTMLSelectElement;
 
 if (tipoDeMedida.value === "cm") {
     estatura = document.querySelector('#estatura') as HTMLInputElement;
@@ -29,6 +30,21 @@ if (tipoDeMedida.value === "cm") {
     }
 }
 
+const displayer = new Displayer(container);
+
+continueBtn.addEventListener('click', () => {
+    displayer.displayActividad();
+    actividad = document.querySelector('#actividad') as HTMLSelectElement;
+    if(document.querySelector(".objetivoBtn")) {
+        const objetivoBtn = document.querySelector(".objetivoBtn") as HTMLParagraphElement;
+        objetivoBtn.addEventListener("click", () => {
+            displayer.displayObjetivo()
+            objetivo = document.querySelector('#objetivo') as HTMLSelectElement;
+        })
+    }
+})
+
+console.log()
 
 form.addEventListener('submit', (e: Event) => {
     e.preventDefault();
@@ -44,8 +60,8 @@ form.addEventListener('submit', (e: Event) => {
     const rmb = calculator.calculateRmb();
     console.log(rmb)
     const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
-    const displayer = new Displayer(container, objetivoCalories, objetivo.value);
 
-    displayer.display();
+
+    displayer.displayResult(objetivoCalories, objetivo.value);
     
 })

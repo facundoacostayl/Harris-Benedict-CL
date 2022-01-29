@@ -4,6 +4,7 @@ import { Calculator } from './classes/Calculator.js';
 import { Displayer } from './classes/Displayer.js';
 const container = document.querySelector('#form');
 const form = document.querySelector('form');
+const continueBtn = document.querySelector('.actividadBtn');
 const sexo = document.querySelector('#sexo');
 const peso = document.querySelector('#peso');
 const tipoDePeso = document.querySelector('#tipo-de-peso');
@@ -12,8 +13,8 @@ let feet;
 let inches;
 const tipoDeMedida = document.querySelector('#tipo-de-medida');
 const edad = document.querySelector('#edad');
-const actividad = document.querySelector('#actividad');
-const objetivo = document.querySelector('#objetivo');
+let actividad;
+let objetivo;
 if (tipoDeMedida.value === "cm") {
     estatura = document.querySelector('#estatura');
 }
@@ -25,6 +26,19 @@ else {
         ///estatura = Number(inchPlusFeet);
     }
 }
+const displayer = new Displayer(container);
+continueBtn.addEventListener('click', () => {
+    displayer.displayActividad();
+    actividad = document.querySelector('#actividad');
+    if (document.querySelector(".objetivoBtn")) {
+        const objetivoBtn = document.querySelector(".objetivoBtn");
+        objetivoBtn.addEventListener("click", () => {
+            displayer.displayObjetivo();
+            objetivo = document.querySelector('#objetivo');
+        });
+    }
+});
+console.log();
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     let user;
@@ -38,6 +52,5 @@ form.addEventListener('submit', (e) => {
     const rmb = calculator.calculateRmb();
     console.log(rmb);
     const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
-    const displayer = new Displayer(container, objetivoCalories, objetivo.value);
-    displayer.display();
+    displayer.displayResult(objetivoCalories, objetivo.value);
 });
