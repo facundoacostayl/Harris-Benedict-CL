@@ -1,0 +1,30 @@
+body {
+  background: #84ceeb;
+  background: radial-gradient(circle, #84ceeb 0%, #c1c8e4 100%);
+  color: white;
+}
+
+.input, select {
+  border: 1px solid #e0e0e0d5;
+  border-radius: 3px;
+  width: 100%;
+  height: 37px;
+  color: #ccccccd5;
+}
+
+.button {
+  display: block;
+  width: 60%;
+  margin: 0 auto;
+  padding: .5rem;
+  color: white;
+  background: #5ab9ea;
+  background: linear-gradient(233deg, #5ab9ea 0%, #8860d0 93%);
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: .9rem;
+}
+/*# sourceMappingURL=main.css.map */

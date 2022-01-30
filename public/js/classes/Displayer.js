@@ -12,7 +12,7 @@ export class Displayer {
         selectDiv.className = "col-md-6";
         selectDiv.innerHTML =
             `
-         <select class="form-control text-center" name="actividad" id="actividad">
+         <select class="text-center" name="actividad" id="actividad">
                     <option value="sedentario">Sedentario</option>
                     <option value="ligera">Actividad Ligera</option>
                     <option value="moderada">Actividad Moderada</option>
@@ -22,7 +22,7 @@ export class Displayer {
         `;
         const buttonDiv = document.createElement("div");
         buttonDiv.className = "col-12";
-        buttonDiv.innerHTML = `<p class="objetivoBtn btn btn-primary">Continuar</p>`;
+        buttonDiv.innerHTML = `<p class="objetivoBtn button">Continuar</p>`;
         container.appendChild(labelDiv);
         container.appendChild(selectDiv);
         container.appendChild(buttonDiv);
@@ -37,7 +37,7 @@ export class Displayer {
         selectDiv.className = "col-md-6";
         selectDiv.innerHTML =
             `
-         <select class="form-control text-center" id="objetivo" name="objetivo">
+         <select class="text-center" id="objetivo" name="objetivo">
                     <option value="mantener">Mantener mi peso</option>
                     <option value="bajar">Bajar de peso</option>
                     <option value="subir">Subir de peso</option>
@@ -45,7 +45,7 @@ export class Displayer {
         `;
         const buttonDiv = document.createElement("div");
         buttonDiv.className = "col-12";
-        buttonDiv.innerHTML = `<input id="submit" type="submit" value="Continuar">`;
+        buttonDiv.innerHTML = `<input class="button" id="submit" type="submit" value="Continuar">`;
         container.appendChild(labelDiv);
         container.appendChild(selectDiv);
         container.appendChild(buttonDiv);
