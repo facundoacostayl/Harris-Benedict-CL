@@ -1,0 +1,24 @@
+/*******BACKGROUND*******/
+/*******INPUTS*******/
+/*******BUTTONS*******/
+body {
+  background-color: red;
+}
+
+.button {
+  display: block;
+  width: 60%;
+  margin: 0 auto;
+  padding: 0.5rem;
+  color: white;
+  background: #5ab9ea;
+  background: linear-gradient(233deg, #5ab9ea 0%, #8860d0 93%);
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/*# sourceMappingURL=main.css.map */

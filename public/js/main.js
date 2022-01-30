@@ -28,17 +28,16 @@ else {
 }
 const displayer = new Displayer(container);
 continueBtn.addEventListener('click', () => {
-    displayer.displayActividad();
+    displayer.displayActividad(); //ACA
     actividad = document.querySelector('#actividad');
     if (document.querySelector(".objetivoBtn")) {
         const objetivoBtn = document.querySelector(".objetivoBtn");
         objetivoBtn.addEventListener("click", () => {
-            displayer.displayObjetivo();
+            displayer.displayObjetivo(); // Y ACA
             objetivo = document.querySelector('#objetivo');
         });
     }
 });
-console.log();
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     let user;
@@ -50,7 +49,6 @@ form.addEventListener('submit', (e) => {
     }
     const calculator = new Calculator(user.calculate());
     const rmb = calculator.calculateRmb();
-    console.log(rmb);
     const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
     displayer.displayResult(objetivoCalories, objetivo.value);
 });

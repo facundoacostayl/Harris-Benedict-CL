@@ -17,13 +17,13 @@ const edad = document.querySelector('#edad') as HTMLInputElement;
 let actividad: HTMLSelectElement;
 let objetivo: HTMLSelectElement;
 
+
 if (tipoDeMedida.value === "cm") {
     estatura = document.querySelector('#estatura') as HTMLInputElement;
 } else {
     if (document.querySelector("#inches") && document.querySelector("#feet")) {
         feet = document.querySelector("#feet") as HTMLInputElement;
         inches = document.querySelector("#inches") as HTMLInputElement;
-
 
         const inchPlusFeet = inches.valueAsNumber.toString() + feet.valueAsNumber.toString();
         ///estatura = Number(inchPlusFeet);
@@ -33,35 +33,34 @@ if (tipoDeMedida.value === "cm") {
 const displayer = new Displayer(container);
 
 continueBtn.addEventListener('click', () => {
-    displayer.displayActividad();
+    displayer.displayActividad(); //ACA
     actividad = document.querySelector('#actividad') as HTMLSelectElement;
-    if(document.querySelector(".objetivoBtn")) {
+    if (document.querySelector(".objetivoBtn")) {
         const objetivoBtn = document.querySelector(".objetivoBtn") as HTMLParagraphElement;
         objetivoBtn.addEventListener("click", () => {
-            displayer.displayObjetivo()
+            displayer.displayObjetivo()// Y ACA
             objetivo = document.querySelector('#objetivo') as HTMLSelectElement;
         })
     }
 })
 
-console.log()
 
 form.addEventListener('submit', (e: Event) => {
     e.preventDefault();
-
-    let user: HasCalculate;
-    if(sexo.value === 'hombre') {
-        user = new Hombre(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value)
-    }else {
-        user = new Mujer(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value)
-    }
-
-    const calculator = new Calculator(user.calculate());
-    const rmb = calculator.calculateRmb();
-    console.log(rmb)
-    const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
-
-
-    displayer.displayResult(objetivoCalories, objetivo.value);
     
+        let user: HasCalculate;
+        if (sexo.value === 'hombre') {
+            user = new Hombre(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value)
+        } else {
+            user = new Mujer(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value)
+        }
+
+
+        const calculator = new Calculator(user.calculate());
+        const rmb = calculator.calculateRmb();
+        const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
+
+
+        displayer.displayResult(objetivoCalories, objetivo.value);
+
 })

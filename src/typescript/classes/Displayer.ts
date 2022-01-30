@@ -58,7 +58,7 @@ export class Displayer {
 
         const buttonDiv = document.createElement("div");
         buttonDiv.className = "col-12";
-        buttonDiv.innerHTML = `<input class="button" id="submit" type="submit" value="Continuar">`
+        buttonDiv.innerHTML = `<input class="button" id="submit" type="submit" value="Calcular">`
 
         container.appendChild(labelDiv);
         container.appendChild(selectDiv);
