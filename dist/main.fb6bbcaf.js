@@ -332,6 +332,19 @@ var Displayer = /*#__PURE__*/function () {
   }
 
   _createClass(Displayer, [{
+    key: "displayErrorMessages",
+    value: function displayErrorMessages(errorMessages) {
+      var container = this.container;
+      var errorDiv = document.createElement("div");
+      errorDiv.classList.add("col-12", "bg-danger", "errorAlert");
+      errorMessages.forEach(function (e) {
+        var message = document.createElement("p");
+        message.innerText = e;
+        errorDiv.appendChild(message);
+      });
+      container.appendChild(errorDiv);
+    }
+  }, {
     key: "displayActividad",
     value: function displayActividad() {
       var container = this.container;
@@ -424,18 +437,41 @@ if (tipoDeMedida.value === "cm") {
 
 var displayer = new _Displayer.Displayer(container);
 continueBtn.addEventListener('click', function () {
-  displayer.displayActividad();
-  actividad = document.querySelector('#actividad');
+  var isCorrect = true;
+  var errorMessages = [];
 
-  if (document.querySelector(".objetivoBtn")) {
-    var objetivoBtn = document.querySelector(".objetivoBtn");
-    objetivoBtn.addEventListener("click", function () {
-      displayer.displayObjetivo();
-      objetivo = document.querySelector('#objetivo');
-    });
+  if (!peso.value) {
+    isCorrect = false;
+    errorMessages.push("Debes ingresar un peso válido");
+  }
+
+  if (!estatura.value) {
+    isCorrect = false;
+    errorMessages.push("Debes ingresar una estatura válida");
+  }
+
+  if (!edad.value) {
+    isCorrect = false;
+    errorMessages.push("Debes ingresar una edad válida");
+  }
+
+  if (!isCorrect) {
+    displayer.displayErrorMessages(errorMessages);
+  } else {
+    displayer.displayActividad(); //ACA
+
+    actividad = document.querySelector('#actividad');
+
+    if (document.querySelector(".objetivoBtn")) {
+      var objetivoBtn = document.querySelector(".objetivoBtn");
+      objetivoBtn.addEventListener("click", function () {
+        displayer.displayObjetivo(); // Y ACA
+
+        objetivo = document.querySelector('#objetivo');
+      });
+    }
   }
 });
-console.log();
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   var user;
@@ -448,7 +484,6 @@ form.addEventListener('submit', function (e) {
 
   var calculator = new _Calculator.Calculator(user.calculate());
   var rmb = calculator.calculateRmb();
-  console.log(rmb);
   var objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
   displayer.displayResult(objetivoCalories, objetivo.value);
 });
@@ -480,7 +515,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57192" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53593" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

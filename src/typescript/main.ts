@@ -33,34 +33,53 @@ if (tipoDeMedida.value === "cm") {
 const displayer = new Displayer(container);
 
 continueBtn.addEventListener('click', () => {
-    displayer.displayActividad(); //ACA
-    actividad = document.querySelector('#actividad') as HTMLSelectElement;
-    if (document.querySelector(".objetivoBtn")) {
-        const objetivoBtn = document.querySelector(".objetivoBtn") as HTMLParagraphElement;
-        objetivoBtn.addEventListener("click", () => {
-            displayer.displayObjetivo()// Y ACA
-            objetivo = document.querySelector('#objetivo') as HTMLSelectElement;
-        })
+    let isCorrect: boolean = true;
+    const errorMessages: string[] = [];
+    if (!peso.value) {
+        isCorrect = false;
+        errorMessages.push("Debes ingresar un peso válido")
+    }
+    if (!estatura.value) {
+        isCorrect = false;
+        errorMessages.push("Debes ingresar una estatura válida")
+    }
+    if (!edad.value) {
+        isCorrect = false;
+        errorMessages.push("Debes ingresar una edad válida");
+    }
+
+    if(!isCorrect){
+        displayer.displayErrorMessages(errorMessages);
+    }else {
+        displayer.displayActividad(); //ACA
+        actividad = document.querySelector('#actividad') as HTMLSelectElement;
+        if (document.querySelector(".objetivoBtn")) {
+            const objetivoBtn = document.querySelector(".objetivoBtn") as HTMLParagraphElement;
+            objetivoBtn.addEventListener("click", () => {
+                displayer.displayObjetivo()// Y ACA
+                objetivo = document.querySelector('#objetivo') as HTMLSelectElement;
+            })
+        }
     }
 })
 
 
 form.addEventListener('submit', (e: Event) => {
     e.preventDefault();
-    
-        let user: HasCalculate;
-        if (sexo.value === 'hombre') {
-            user = new Hombre(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value)
-        } else {
-            user = new Mujer(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value)
-        }
+
+    let user: HasCalculate;
+    if (sexo.value === 'hombre') {
+        user = new Hombre(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value)
+    } else {
+        user = new Mujer(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value)
+    }
 
 
-        const calculator = new Calculator(user.calculate());
-        const rmb = calculator.calculateRmb();
-        const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
+    const calculator = new Calculator(user.calculate());
+    const rmb = calculator.calculateRmb();
+    const objetivoCalories = calculator.calculateGoals(objetivo.value, rmb);
 
 
-        displayer.displayResult(objetivoCalories, objetivo.value);
+    displayer.displayResult(objetivoCalories, objetivo.value);
 
 })

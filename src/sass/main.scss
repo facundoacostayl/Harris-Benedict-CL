@@ -28,3 +28,16 @@ label {
     @extend %button;
 }
 
+.errorAlert {
+    position: absolute;
+    left: 0;
+    top: 8%;
+    height: 90px;
+    padding: .5rem 1rem;
+
+    p{
+        line-height: 13px;
+        font-weight: 500;
+        font-size: f.$small;
+    }
+}

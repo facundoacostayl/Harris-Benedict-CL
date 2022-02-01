@@ -28,14 +28,33 @@ else {
 }
 const displayer = new Displayer(container);
 continueBtn.addEventListener('click', () => {
-    displayer.displayActividad(); //ACA
-    actividad = document.querySelector('#actividad');
-    if (document.querySelector(".objetivoBtn")) {
-        const objetivoBtn = document.querySelector(".objetivoBtn");
-        objetivoBtn.addEventListener("click", () => {
-            displayer.displayObjetivo(); // Y ACA
-            objetivo = document.querySelector('#objetivo');
-        });
+    let isCorrect = true;
+    const errorMessages = [];
+    if (!peso.value) {
+        isCorrect = false;
+        errorMessages.push("Debes ingresar un peso válido");
+    }
+    if (!estatura.value) {
+        isCorrect = false;
+        errorMessages.push("Debes ingresar una estatura válida");
+    }
+    if (!edad.value) {
+        isCorrect = false;
+        errorMessages.push("Debes ingresar una edad válida");
+    }
+    if (!isCorrect) {
+        displayer.displayErrorMessages(errorMessages);
+    }
+    else {
+        displayer.displayActividad(); //ACA
+        actividad = document.querySelector('#actividad');
+        if (document.querySelector(".objetivoBtn")) {
+            const objetivoBtn = document.querySelector(".objetivoBtn");
+            objetivoBtn.addEventListener("click", () => {
+                displayer.displayObjetivo(); // Y ACA
+                objetivo = document.querySelector('#objetivo');
+            });
+        }
     }
 });
 form.addEventListener('submit', (e) => {

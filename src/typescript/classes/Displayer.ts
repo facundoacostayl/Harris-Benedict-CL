@@ -5,6 +5,18 @@ export class Displayer {
         
     ){}
 
+    displayErrorMessages(errorMessages: string[]) {
+        const container = this.container;
+        const errorDiv = document.createElement("div");
+        errorDiv.classList.add("col-12", "bg-danger", "errorAlert");
+        errorMessages.forEach(e => {
+            let message = document.createElement("p");
+            message.innerText = e;
+            errorDiv.appendChild(message);
+        })
+        container.appendChild(errorDiv);
+    }
+
     displayActividad() {
         const container = this.container;
 
