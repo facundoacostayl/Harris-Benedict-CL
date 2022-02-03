@@ -333,8 +333,9 @@ var Displayer = /*#__PURE__*/function () {
 
   _createClass(Displayer, [{
     key: "displayErrorMessages",
-    value: function displayErrorMessages(errorMessages) {
+    value: function displayErrorMessages(errorMessages, title) {
       var container = this.container;
+      title.style.opacity = "0";
       var errorDiv = document.createElement("div");
       errorDiv.classList.add("col-12", "bg-danger", "errorAlert");
       errorMessages.forEach(function (e) {
@@ -342,7 +343,7 @@ var Displayer = /*#__PURE__*/function () {
         message.innerText = e;
         errorDiv.appendChild(message);
       });
-      container.appendChild(errorDiv);
+      container.prepend(errorDiv);
     }
   }, {
     key: "displayActividad",
@@ -414,6 +415,7 @@ var _Displayer = require("./classes/Displayer.js");
 var container = document.querySelector('#form');
 var form = document.querySelector('form');
 var continueBtn = document.querySelector('.actividadBtn');
+var titleForm = document.querySelector('.title__form');
 var sexo = document.querySelector('#sexo');
 var peso = document.querySelector('#peso');
 var tipoDePeso = document.querySelector('#tipo-de-peso');
@@ -440,23 +442,27 @@ continueBtn.addEventListener('click', function () {
   var isCorrect = true;
   var errorMessages = [];
 
-  if (!peso.value) {
+  if (!peso.valueAsNumber) {
     isCorrect = false;
     errorMessages.push("Debes ingresar un peso válido");
   }
 
-  if (!estatura.value) {
+  if (!estatura.valueAsNumber) {
     isCorrect = false;
     errorMessages.push("Debes ingresar una estatura válida");
   }
 
-  if (!edad.value) {
+  if (!edad.valueAsNumber) {
     isCorrect = false;
     errorMessages.push("Debes ingresar una edad válida");
   }
 
   if (!isCorrect) {
-    displayer.displayErrorMessages(errorMessages);
+    if (container.querySelector(".errorAlert")) {
+      container.removeChild(container.children[0]);
+    }
+
+    displayer.displayErrorMessages(errorMessages, titleForm);
   } else {
     displayer.displayActividad(); //ACA
 
@@ -515,7 +521,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53593" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56073" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

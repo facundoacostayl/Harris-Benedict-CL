@@ -5,6 +5,7 @@ import { Displayer } from './classes/Displayer.js';
 const container = document.querySelector('#form');
 const form = document.querySelector('form');
 const continueBtn = document.querySelector('.actividadBtn');
+const titleForm = document.querySelector('.title__form');
 const sexo = document.querySelector('#sexo');
 const peso = document.querySelector('#peso');
 const tipoDePeso = document.querySelector('#tipo-de-peso');
@@ -30,20 +31,23 @@ const displayer = new Displayer(container);
 continueBtn.addEventListener('click', () => {
     let isCorrect = true;
     const errorMessages = [];
-    if (!peso.value) {
+    if (!peso.valueAsNumber) {
         isCorrect = false;
         errorMessages.push("Debes ingresar un peso válido");
     }
-    if (!estatura.value) {
+    if (!estatura.valueAsNumber) {
         isCorrect = false;
         errorMessages.push("Debes ingresar una estatura válida");
     }
-    if (!edad.value) {
+    if (!edad.valueAsNumber) {
         isCorrect = false;
         errorMessages.push("Debes ingresar una edad válida");
     }
     if (!isCorrect) {
-        displayer.displayErrorMessages(errorMessages);
+        if (container.querySelector(".errorAlert")) {
+            container.removeChild(container.children[0]);
+        }
+        displayer.displayErrorMessages(errorMessages, titleForm);
     }
     else {
         displayer.displayActividad(); //ACA

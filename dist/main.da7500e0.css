@@ -52,11 +52,12 @@ label {
   position: absolute;
   left: 0;
   top: 8%;
-  height: 90px;
-  padding: 0.5rem 1rem;
+  height: auto;
+  padding: 0.1rem 1rem;
 }
 .errorAlert p {
-  line-height: 13px;
+  margin-top: 0.7rem;
+  line-height: 10px;
   font-weight: 500;
   font-size: 0.9rem;
 }

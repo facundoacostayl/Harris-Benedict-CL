@@ -5,8 +5,9 @@ export class Displayer {
         
     ){}
 
-    displayErrorMessages(errorMessages: string[]) {
+    displayErrorMessages(errorMessages: string[], title: HTMLElement) {
         const container = this.container;
+        title.style.opacity = "0";
         const errorDiv = document.createElement("div");
         errorDiv.classList.add("col-12", "bg-danger", "errorAlert");
         errorMessages.forEach(e => {
@@ -14,7 +15,7 @@ export class Displayer {
             message.innerText = e;
             errorDiv.appendChild(message);
         })
-        container.appendChild(errorDiv);
+        container.prepend(errorDiv);
     }
 
     displayActividad() {

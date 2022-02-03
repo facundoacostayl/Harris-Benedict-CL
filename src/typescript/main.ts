@@ -7,6 +7,7 @@ import { Displayer } from './classes/Displayer.js'
 const container = document.querySelector('#form') as HTMLDivElement;
 const form = document.querySelector('form') as HTMLFormElement;
 const continueBtn = document.querySelector('.actividadBtn') as HTMLParagraphElement;
+const titleForm = document.querySelector('.title__form') as HTMLElement;
 const sexo = document.querySelector('#sexo') as HTMLSelectElement;
 const peso = document.querySelector('#peso') as HTMLInputElement;
 const tipoDePeso = document.querySelector('#tipo-de-peso') as HTMLSelectElement;
@@ -16,7 +17,6 @@ const tipoDeMedida = document.querySelector('#tipo-de-medida') as HTMLSelectElem
 const edad = document.querySelector('#edad') as HTMLInputElement;
 let actividad: HTMLSelectElement;
 let objetivo: HTMLSelectElement;
-
 
 if (tipoDeMedida.value === "cm") {
     estatura = document.querySelector('#estatura') as HTMLInputElement;
@@ -35,21 +35,24 @@ const displayer = new Displayer(container);
 continueBtn.addEventListener('click', () => {
     let isCorrect: boolean = true;
     const errorMessages: string[] = [];
-    if (!peso.value) {
+    if (!peso.valueAsNumber) {
         isCorrect = false;
         errorMessages.push("Debes ingresar un peso válido")
     }
-    if (!estatura.value) {
+    if (!estatura.valueAsNumber) {
         isCorrect = false;
         errorMessages.push("Debes ingresar una estatura válida")
     }
-    if (!edad.value) {
+    if (!edad.valueAsNumber) {
         isCorrect = false;
         errorMessages.push("Debes ingresar una edad válida");
     }
 
     if(!isCorrect){
-        displayer.displayErrorMessages(errorMessages);
+        if(container.querySelector(".errorAlert")) {
+            container.removeChild(container.children[0]);
+        }
+        displayer.displayErrorMessages(errorMessages, titleForm);
     }else {
         displayer.displayActividad(); //ACA
         actividad = document.querySelector('#actividad') as HTMLSelectElement;

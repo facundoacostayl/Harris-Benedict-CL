@@ -33,7 +33,7 @@
         </div>
     </nav>
     <main id="container" class="container mt-4">
-        <h4 class="text-center mt-4">Completa los siguientes datos
+        <h4 class="text-center mt-4 title__form">Completa los siguientes datos</h4>
         <form id="form" class="row g-3 pt-4" action="">
             <div class="col-md-6 text-center">
                 <label for="sexo">Sexo</label>
@@ -51,7 +51,7 @@
                 <label for="tipo-de-peso">Tipo</label>
             </div>
             <div class="col-8">
-                <input class="input" id="peso" type="number">
+                <input class="input numInput" id="peso" type="number" onKeyPress="if(this.value.length==3) return false">
             </div>
             <div class="col-4">
                 <select name="tipoDePeso" id="tipo-de-peso">
@@ -66,7 +66,7 @@
                 <label for="tipo-de-medida">Medida</label>
             </div>
             <div class="col-8">
-                <input class="input" id="estatura" type="number">
+                <input class="input numInput" id="estatura" type="number" onKeyPress="if(this.value.length==3) return false">
             </div>
             <div class="col-4">
                 <select name="tipoDePeso" id="tipo-de-medida">
@@ -78,7 +78,7 @@
                 <label for="edad">Edad</label>
             </div>
             <div class="col-md-6">
-                <input class="input" id="edad" type="number">
+                <input class="input numInput" id="edad" type="number" onKeyPress="if(this.value.length==3) return false">
             </div>
             <!--<div class="col-12">
                 <input id="submit" type="submit" value="Continuar">
@@ -87,7 +87,7 @@
                 <p class="actividadBtn button">Continuar</p>
             </div>
         </form>
-    </h4></main>
+    </main>
 </body>
 
 </html>
