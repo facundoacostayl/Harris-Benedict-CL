@@ -416,6 +416,7 @@ var container = document.querySelector('#form');
 var form = document.querySelector('form');
 var continueBtn = document.querySelector('.actividadBtn');
 var titleForm = document.querySelector('.title__form');
+var typeNumberInputs = document.querySelectorAll('.numInput');
 var sexo = document.querySelector('#sexo');
 var peso = document.querySelector('#peso');
 var tipoDePeso = document.querySelector('#tipo-de-peso');
@@ -438,10 +439,75 @@ if (tipoDeMedida.value === "cm") {
 }
 
 var displayer = new _Displayer.Displayer(container);
-continueBtn.addEventListener('click', function () {
-  var isCorrect = true;
-  var errorMessages = [];
+var isCorrect = true;
+var errorMessages = [];
 
+var desactivateButton = function desactivateButton() {
+  continueBtn.classList.add("buttonDisabled");
+};
+
+var paintInputNormal = function paintInputNormal(event) {
+  event.style.border = "none";
+};
+
+var activateButton = function activateButton() {
+  continueBtn.classList.remove("buttonDisabled");
+};
+
+var displayError = function displayError(event) {
+  event.style.border = "1px solid red";
+  desactivateButton();
+  errorMessages.push("De ser correctos los campos marcados en rojo, recomendamos consultar con un especialista para un analisis óptimo.");
+  displayer.displayErrorMessages(errorMessages, titleForm);
+  isCorrect = false;
+};
+
+typeNumberInputs.forEach(function (i) {
+  i.addEventListener("blur", function (e) {
+    var input = e.target;
+
+    if (input.id === "peso" && tipoDePeso.value === "kilos") {
+      if (input.valueAsNumber >= 300) {
+        displayError(input);
+      } else if (input.valueAsNumber <= 45) {
+        displayError(input);
+      } else {
+        paintInputNormal(input);
+        isCorrect = true;
+      }
+    }
+
+    if (input.id === "peso" && tipoDePeso.value === "lb") {
+      if (input.valueAsNumber >= 660) {
+        displayError(input);
+      } else if (input.valueAsNumber <= 45) {
+        displayError(input);
+      } else {
+        paintInputNormal(input);
+        isCorrect = true;
+      }
+    }
+
+    if (input.id === "estatura" && tipoDeMedida.value === "cm") {
+      if (estatura.valueAsNumber >= 240) {
+        displayError(input);
+      } else {
+        paintInputNormal(input);
+      }
+    } //CONTINUE HERE - NORMAL AGE VERIFICATION
+
+  });
+});
+typeNumberInputs.forEach(function (i) {
+  i.addEventListener("input", function (e) {
+    var input = e.target;
+
+    if (input.value === "") {
+      activateButton();
+    }
+  });
+});
+continueBtn.addEventListener('click', function () {
   if (!peso.valueAsNumber) {
     isCorrect = false;
     errorMessages.push("Debes ingresar un peso válido");
@@ -463,6 +529,7 @@ continueBtn.addEventListener('click', function () {
     }
 
     displayer.displayErrorMessages(errorMessages, titleForm);
+    desactivateButton();
   } else {
     displayer.displayActividad(); //ACA
 
@@ -521,7 +588,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56073" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53898" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

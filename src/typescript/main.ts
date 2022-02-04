@@ -8,6 +8,7 @@ const container = document.querySelector('#form') as HTMLDivElement;
 const form = document.querySelector('form') as HTMLFormElement;
 const continueBtn = document.querySelector('.actividadBtn') as HTMLParagraphElement;
 const titleForm = document.querySelector('.title__form') as HTMLElement;
+const typeNumberInputs = document.querySelectorAll('.numInput') as NodeList;
 const sexo = document.querySelector('#sexo') as HTMLSelectElement;
 const peso = document.querySelector('#peso') as HTMLInputElement;
 const tipoDePeso = document.querySelector('#tipo-de-peso') as HTMLSelectElement;
@@ -30,11 +31,83 @@ if (tipoDeMedida.value === "cm") {
     }
 }
 
+
 const displayer = new Displayer(container);
+let isCorrect: boolean = true;
+const errorMessages: string[] = [];
+
+const desactivateButton = () => {
+    continueBtn.classList.add("buttonDisabled");
+}
+
+
+const paintInputNormal = (event: HTMLInputElement) => {
+    event.style.border = "none";
+}
+
+const activateButton = () => {
+    continueBtn.classList.remove("buttonDisabled");
+}
+
+const displayError = (event: HTMLInputElement) => {
+    event.style.border = "1px solid red";
+    desactivateButton();
+    errorMessages.push("De ser correctos los campos marcados en rojo, recomendamos consultar con un especialista para un analisis óptimo.")
+    displayer.displayErrorMessages(errorMessages, titleForm);
+    isCorrect = false;
+}
+
+
+typeNumberInputs.forEach(i => {
+    i.addEventListener("blur", (e: Event) => {
+        const input = e.target as HTMLInputElement;
+        if (input.id === "peso" && tipoDePeso.value === "kilos") {
+            if (input.valueAsNumber >= 300) {
+                displayError(input);
+                
+            }else if (input.valueAsNumber <= 45){
+                displayError(input);
+                
+            }else {
+                paintInputNormal(input)
+                isCorrect = true
+            }
+        }
+
+        if (input.id === "peso" && tipoDePeso.value === "lb") {
+            if(input.valueAsNumber >= 660) {
+                displayError(input);
+                
+            }else if (input.valueAsNumber <= 45){
+                displayError(input);
+                
+            }else {
+                paintInputNormal(input);
+                isCorrect = true;
+            }
+        }
+        if (input.id === "estatura" && tipoDeMedida.value === "cm"){
+            if(estatura.valueAsNumber >= 240){
+                displayError(input);
+                
+            }else {
+                paintInputNormal(input)
+            }
+        }
+        //CONTINUE HERE - NORMAL AGE VERIFICATION
+    })
+})
+
+typeNumberInputs.forEach(i => {
+    i.addEventListener("input", (e: Event) => {
+        const input = e.target as HTMLInputElement;
+        if(input.value === "") {
+            activateButton();
+        }
+    })
+})
 
 continueBtn.addEventListener('click', () => {
-    let isCorrect: boolean = true;
-    const errorMessages: string[] = [];
     if (!peso.valueAsNumber) {
         isCorrect = false;
         errorMessages.push("Debes ingresar un peso válido")
@@ -48,12 +121,13 @@ continueBtn.addEventListener('click', () => {
         errorMessages.push("Debes ingresar una edad válida");
     }
 
-    if(!isCorrect){
-        if(container.querySelector(".errorAlert")) {
+    if (!isCorrect) {
+        if (container.querySelector(".errorAlert")) {
             container.removeChild(container.children[0]);
         }
         displayer.displayErrorMessages(errorMessages, titleForm);
-    }else {
+        desactivateButton();
+    } else {
         displayer.displayActividad(); //ACA
         actividad = document.querySelector('#actividad') as HTMLSelectElement;
         if (document.querySelector(".objetivoBtn")) {
