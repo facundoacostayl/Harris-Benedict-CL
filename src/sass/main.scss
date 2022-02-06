@@ -37,7 +37,7 @@ label {
 .errorAlert {
     position: absolute;
     left: 0;
-    top: 8%;
+    top: 7%;
     height: auto;
     padding: .1rem 1rem;
 
@@ -49,3 +49,12 @@ label {
         font-size: f.$small;
     }
 }
+
+    .input__container {
+        p {
+            position: absolute;
+            font-size: f.$small;
+            color: red;
+        }
+    }
+

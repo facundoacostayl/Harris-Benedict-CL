@@ -412,6 +412,9 @@ var _Calculator = require("./classes/Calculator.js");
 
 var _Displayer = require("./classes/Displayer.js");
 
+//**IMPORTS**/
+
+/**VARIABLES**/
 var container = document.querySelector('#form');
 var form = document.querySelector('form');
 var continueBtn = document.querySelector('.actividadBtn');
@@ -420,27 +423,36 @@ var typeNumberInputs = document.querySelectorAll('.numInput');
 var sexo = document.querySelector('#sexo');
 var peso = document.querySelector('#peso');
 var tipoDePeso = document.querySelector('#tipo-de-peso');
-var estatura;
-var feet;
-var inches;
+var estaturaEnCm = document.querySelector('#estatura');
+var estaturaEnInches;
+var estaturaTotal;
+var feet = document.querySelector("#feet");
+var inches = document.querySelector("#inches");
 var tipoDeMedida = document.querySelector('#tipo-de-medida');
 var edad = document.querySelector('#edad');
 var actividad;
 var objetivo;
+tipoDeMedida.addEventListener("change", function () {
+  var estaturaEnCmInput = document.querySelector('.estaturaEnCm');
+  var estaturaEnInches = document.querySelector('.estaturaEnInches');
 
-if (tipoDeMedida.value === "cm") {
-  estatura = document.querySelector('#estatura');
-} else {
-  if (document.querySelector("#inches") && document.querySelector("#feet")) {
-    feet = document.querySelector("#feet");
-    inches = document.querySelector("#inches");
-    var inchPlusFeet = inches.valueAsNumber.toString() + feet.valueAsNumber.toString(); ///estatura = Number(inchPlusFeet);
+  if (tipoDeMedida.value == "ft-inches") {
+    estaturaEnCmInput.classList.add("d-none");
+    estaturaEnInches.classList.remove("d-none");
+  } else {
+    estaturaEnInches.classList.add("d-none");
+    estaturaEnCmInput.classList.remove("d-none");
   }
-}
-
+});
 var displayer = new _Displayer.Displayer(container);
 var isCorrect = true;
 var errorMessages = [];
+
+var activateButton = function activateButton() {
+  if (continueBtn.classList.contains("buttonDisabled")) {
+    continueBtn.classList.remove("buttonDisabled");
+  }
+};
 
 var desactivateButton = function desactivateButton() {
   continueBtn.classList.add("buttonDisabled");
@@ -450,15 +462,23 @@ var paintInputNormal = function paintInputNormal(event) {
   event.style.border = "none";
 };
 
-var activateButton = function activateButton() {
-  continueBtn.classList.remove("buttonDisabled");
+var removeInputAlert = function removeInputAlert(event) {
+  var eventParent = event.parentElement;
+  var eventParentLength = eventParent.childNodes.length - 1;
+  eventParent.removeChild(eventParent.childNodes[eventParentLength]);
 };
 
 var displayError = function displayError(event) {
+  if (!event.parentElement.querySelector(".input__alert")) {
+    var inputAlert = document.createElement("p");
+    inputAlert.classList.add("input__alert");
+    var inputAlertContent = "Se requiere atención especializada";
+    inputAlert.textContent = inputAlertContent;
+    event.parentElement.append(inputAlert);
+  }
+
   event.style.border = "1px solid red";
   desactivateButton();
-  errorMessages.push("De ser correctos los campos marcados en rojo, recomendamos consultar con un especialista para un analisis óptimo.");
-  displayer.displayErrorMessages(errorMessages, titleForm);
   isCorrect = false;
 };
 
@@ -467,35 +487,44 @@ typeNumberInputs.forEach(function (i) {
     var input = e.target;
 
     if (input.id === "peso" && tipoDePeso.value === "kilos") {
-      if (input.valueAsNumber >= 300) {
-        displayError(input);
-      } else if (input.valueAsNumber <= 45) {
+      if (input.valueAsNumber >= 300 || input.valueAsNumber <= 45) {
         displayError(input);
       } else {
         paintInputNormal(input);
+        activateButton();
         isCorrect = true;
       }
     }
 
-    if (input.id === "peso" && tipoDePeso.value === "lb") {
-      if (input.valueAsNumber >= 660) {
-        displayError(input);
-      } else if (input.valueAsNumber <= 45) {
+    if (input.id === "peso" && tipoDePeso.value === "libras") {
+      if (input.valueAsNumber >= 660 || input.valueAsNumber <= 45) {
         displayError(input);
       } else {
         paintInputNormal(input);
+        activateButton();
         isCorrect = true;
       }
     }
 
     if (input.id === "estatura" && tipoDeMedida.value === "cm") {
-      if (estatura.valueAsNumber >= 240) {
+      if (estaturaEnCm.valueAsNumber >= 240 || estaturaEnCm.valueAsNumber <= 100) {
         displayError(input);
       } else {
         paintInputNormal(input);
+        activateButton();
+        isCorrect = true;
       }
-    } //CONTINUE HERE - NORMAL AGE VERIFICATION
+    }
 
+    if (input.id === "edad") {
+      if (edad.valueAsNumber < 18 || edad.valueAsNumber > 85) {
+        displayError(input);
+      } else {
+        paintInputNormal(input);
+        activateButton();
+        isCorrect = true;
+      }
+    }
   });
 });
 typeNumberInputs.forEach(function (i) {
@@ -504,18 +533,43 @@ typeNumberInputs.forEach(function (i) {
 
     if (input.value === "") {
       activateButton();
+      removeInputAlert(input);
     }
   });
 });
+
+var definirEstatura = function definirEstatura() {
+  if (tipoDeMedida.value === "cm") {
+    estaturaTotal = estaturaEnCm.valueAsNumber;
+  } else {
+    if (tipoDeMedida.value === "ft-inches") {
+      var inchPlusFeet = feet.valueAsNumber.toString() + inches.valueAsNumber.toString();
+      estaturaEnInches = Number(inchPlusFeet);
+      estaturaTotal = estaturaEnInches;
+    }
+  }
+};
+
 continueBtn.addEventListener('click', function () {
   if (!peso.valueAsNumber) {
     isCorrect = false;
     errorMessages.push("Debes ingresar un peso válido");
   }
 
-  if (!estatura.valueAsNumber) {
-    isCorrect = false;
-    errorMessages.push("Debes ingresar una estatura válida");
+  definirEstatura();
+
+  if (tipoDeMedida.value === "cm") {
+    if (!estaturaEnCm.valueAsNumber) {
+      isCorrect = false;
+      errorMessages.push("Debes ingresar una estatura válida");
+    }
+  }
+
+  if (tipoDeMedida.value === "ft-inches") {
+    if (!feet.valueAsNumber || !inches.valueAsNumber) {
+      isCorrect = false;
+      errorMessages.push("Debes ingresar una estatura válida");
+    }
   }
 
   if (!edad.valueAsNumber) {
@@ -524,22 +578,22 @@ continueBtn.addEventListener('click', function () {
   }
 
   if (!isCorrect) {
-    if (container.querySelector(".errorAlert")) {
+    if (document.querySelector(".errorAlert")) {
       container.removeChild(container.children[0]);
     }
 
     displayer.displayErrorMessages(errorMessages, titleForm);
+    errorMessages = [];
     desactivateButton();
   } else {
-    displayer.displayActividad(); //ACA
-
+    console.log(estaturaEnInches);
+    displayer.displayActividad();
     actividad = document.querySelector('#actividad');
 
     if (document.querySelector(".objetivoBtn")) {
       var objetivoBtn = document.querySelector(".objetivoBtn");
       objetivoBtn.addEventListener("click", function () {
-        displayer.displayObjetivo(); // Y ACA
-
+        displayer.displayObjetivo();
         objetivo = document.querySelector('#objetivo');
       });
     }
@@ -550,9 +604,9 @@ form.addEventListener('submit', function (e) {
   var user;
 
   if (sexo.value === 'hombre') {
-    user = new _Hombre.Hombre(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value);
+    user = new _Hombre.Hombre(peso.valueAsNumber, tipoDePeso.value, estaturaTotal, tipoDeMedida.value, edad.valueAsNumber, actividad.value);
   } else {
-    user = new _Mujer.Mujer(peso.valueAsNumber, tipoDePeso.value, estatura.valueAsNumber, tipoDeMedida.value, edad.valueAsNumber, actividad.value);
+    user = new _Mujer.Mujer(peso.valueAsNumber, tipoDePeso.value, estaturaTotal, tipoDeMedida.value, edad.valueAsNumber, actividad.value);
   }
 
   var calculator = new _Calculator.Calculator(user.calculate());
@@ -588,7 +642,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53898" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61833" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
