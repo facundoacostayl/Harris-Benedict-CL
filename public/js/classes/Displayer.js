@@ -7,7 +7,7 @@ export class Displayer {
         title.style.opacity = "0";
         const errorDiv = document.createElement("div");
         errorDiv.classList.add("col-12", "bg-danger", "errorAlert");
-        errorMessages.forEach(e => {
+        errorMessages.forEach((e) => {
             let message = document.createElement("p");
             message.innerText = e;
             errorDiv.appendChild(message);
@@ -22,8 +22,7 @@ export class Displayer {
         labelDiv.innerHTML = `<label for="actividad">Nivel de Actividad</label>`;
         const selectDiv = document.createElement("div");
         selectDiv.className = "col-md-6";
-        selectDiv.innerHTML =
-            `
+        selectDiv.innerHTML = `
          <select class="text-center" name="actividad" id="actividad">
                     <option value="sedentario">Sedentario</option>
                     <option value="ligera">Actividad Ligera</option>
@@ -47,8 +46,7 @@ export class Displayer {
         labelDiv.innerHTML = `<label for="actividad">Mi Objetivo es</label>`;
         const selectDiv = document.createElement("div");
         selectDiv.className = "col-md-6";
-        selectDiv.innerHTML =
-            `
+        selectDiv.innerHTML = `
          <select class="text-center" id="objetivo" name="objetivo">
                     <option value="mantener">Mantener mi peso</option>
                     <option value="bajar">Bajar de peso</option>
@@ -66,7 +64,7 @@ export class Displayer {
         const container = this.container;
         container.innerHTML = "";
         const descriptionElement = document.createElement("p");
-        const descriptionContent = `Si querés ${objetivo} tu peso, debes comer alrededor de:`;
+        const descriptionContent = `Si quieres ${objetivo} tu peso, tu ingesta calórica debe ser de:`;
         descriptionElement.innerText = descriptionContent;
         const caloriesElement = document.createElement("h1");
         const caloriesContent = objetivoCalories;

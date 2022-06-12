@@ -387,7 +387,7 @@ var Displayer = /*#__PURE__*/function () {
       var container = this.container;
       container.innerHTML = "";
       var descriptionElement = document.createElement("p");
-      var descriptionContent = "Si quer\xE9s ".concat(objetivo, " tu peso, debes comer alrededor de:");
+      var descriptionContent = "Si quieres ".concat(objetivo, " tu peso, tu ingesta cal\xF3rica debe ser de:");
       descriptionElement.innerText = descriptionContent;
       var caloriesElement = document.createElement("h1");
       var caloriesContent = objetivoCalories;
@@ -431,7 +431,8 @@ var inches = document.querySelector("#inches");
 var tipoDeMedida = document.querySelector('#tipo-de-medida');
 var edad = document.querySelector('#edad');
 var actividad;
-var objetivo;
+var objetivo; //**CM INPUTS TO FEET-INCHES INPUTS DINAMIC CHANGE**/
+
 tipoDeMedida.addEventListener("change", function () {
   var estaturaEnCmInput = document.querySelector('.estaturaEnCm');
   var estaturaEnInches = document.querySelector('.estaturaEnInches');
@@ -447,26 +448,38 @@ tipoDeMedida.addEventListener("change", function () {
 var displayer = new _Displayer.Displayer(container);
 var isCorrect = true;
 var errorMessages = [];
+/**CONTINUE BUTTON ENABLED/DISABLED**/
 
 var activateButton = function activateButton() {
-  if (continueBtn.classList.contains("buttonDisabled")) {
-    continueBtn.classList.remove("buttonDisabled");
+  if (!document.querySelector(".input__alert")) {
+    if (continueBtn.classList.contains("buttonDisabled")) {
+      continueBtn.classList.remove("buttonDisabled");
+    }
   }
 };
 
 var desactivateButton = function desactivateButton() {
   continueBtn.classList.add("buttonDisabled");
 };
+/**RED INPUT**/
+
 
 var paintInputNormal = function paintInputNormal(event) {
   event.style.border = "none";
 };
+/**REMOVE INPUT ALERT**/
+
 
 var removeInputAlert = function removeInputAlert(event) {
   var eventParent = event.parentElement;
-  var eventParentLength = eventParent.childNodes.length - 1;
-  eventParent.removeChild(eventParent.childNodes[eventParentLength]);
+
+  if (eventParent.querySelector(".input__alert")) {
+    var eventParentLength = eventParent.childNodes.length - 1;
+    eventParent.removeChild(eventParent.childNodes[eventParentLength]);
+  }
 };
+/**DISPLAY INPUT ALERT + RED INPUT + BUTTON DISABLED + VALIDATION FALSE**/
+
 
 var displayError = function displayError(event) {
   if (!event.parentElement.querySelector(".input__alert")) {
@@ -481,6 +494,8 @@ var displayError = function displayError(event) {
   desactivateButton();
   isCorrect = false;
 };
+/**INPUT BLUR EVENTS**/
+
 
 typeNumberInputs.forEach(function (i) {
   i.addEventListener("blur", function (e) {
@@ -491,6 +506,7 @@ typeNumberInputs.forEach(function (i) {
         displayError(input);
       } else {
         paintInputNormal(input);
+        removeInputAlert(input);
         activateButton();
         isCorrect = true;
       }
@@ -501,6 +517,7 @@ typeNumberInputs.forEach(function (i) {
         displayError(input);
       } else {
         paintInputNormal(input);
+        removeInputAlert(input);
         activateButton();
         isCorrect = true;
       }
@@ -511,6 +528,18 @@ typeNumberInputs.forEach(function (i) {
         displayError(input);
       } else {
         paintInputNormal(input);
+        removeInputAlert(input);
+        activateButton();
+        isCorrect = true;
+      }
+    }
+
+    if (input.id === "feet" && tipoDeMedida.value === "ft-inches" || input.id === "inches" && tipoDeMedida.value === "ft-inches") {
+      if (feet.valueAsNumber >= 8 || feet.valueAsNumber <= 4 && inches.valueAsNumber >= 10) {
+        displayError(input);
+      } else {
+        paintInputNormal(input);
+        removeInputAlert(input);
         activateButton();
         isCorrect = true;
       }
@@ -521,12 +550,15 @@ typeNumberInputs.forEach(function (i) {
         displayError(input);
       } else {
         paintInputNormal(input);
+        removeInputAlert(input);
         activateButton();
         isCorrect = true;
       }
     }
   });
 });
+/**INPUT "INPUT" EVENTS**/
+
 typeNumberInputs.forEach(function (i) {
   i.addEventListener("input", function (e) {
     var input = e.target;
@@ -537,6 +569,7 @@ typeNumberInputs.forEach(function (i) {
     }
   });
 });
+/**DEFINE "ESTATURA" VALUE => CM OR FEET**/
 
 var definirEstatura = function definirEstatura() {
   if (tipoDeMedida.value === "cm") {
@@ -549,56 +582,61 @@ var definirEstatura = function definirEstatura() {
     }
   }
 };
+/**FORM VALIDATION BEFORE CONTINUE**/
+
 
 continueBtn.addEventListener('click', function () {
-  if (!peso.valueAsNumber) {
-    isCorrect = false;
-    errorMessages.push("Debes ingresar un peso válido");
-  }
-
-  definirEstatura();
-
-  if (tipoDeMedida.value === "cm") {
-    if (!estaturaEnCm.valueAsNumber) {
+  if (!document.querySelector(".input__alert")) {
+    if (!peso.valueAsNumber) {
       isCorrect = false;
-      errorMessages.push("Debes ingresar una estatura válida");
+      errorMessages.push("Debes ingresar un peso válido");
     }
-  }
 
-  if (tipoDeMedida.value === "ft-inches") {
-    if (!feet.valueAsNumber || !inches.valueAsNumber) {
+    definirEstatura();
+
+    if (tipoDeMedida.value === "cm") {
+      if (!estaturaEnCm.valueAsNumber) {
+        isCorrect = false;
+        errorMessages.push("Debes ingresar una estatura válida");
+      }
+    }
+
+    if (tipoDeMedida.value === "ft-inches") {
+      if (!feet.valueAsNumber || !inches.valueAsNumber) {
+        isCorrect = false;
+        errorMessages.push("Debes ingresar una estatura válida");
+      }
+    }
+
+    if (!edad.valueAsNumber) {
       isCorrect = false;
-      errorMessages.push("Debes ingresar una estatura válida");
-    }
-  }
-
-  if (!edad.valueAsNumber) {
-    isCorrect = false;
-    errorMessages.push("Debes ingresar una edad válida");
-  }
-
-  if (!isCorrect) {
-    if (document.querySelector(".errorAlert")) {
-      container.removeChild(container.children[0]);
+      errorMessages.push("Debes ingresar una edad válida");
     }
 
-    displayer.displayErrorMessages(errorMessages, titleForm);
-    errorMessages = [];
-    desactivateButton();
-  } else {
-    console.log(estaturaEnInches);
-    displayer.displayActividad();
-    actividad = document.querySelector('#actividad');
+    if (!isCorrect) {
+      if (document.querySelector(".errorAlert")) {
+        container.removeChild(container.children[0]);
+      }
 
-    if (document.querySelector(".objetivoBtn")) {
-      var objetivoBtn = document.querySelector(".objetivoBtn");
-      objetivoBtn.addEventListener("click", function () {
-        displayer.displayObjetivo();
-        objetivo = document.querySelector('#objetivo');
-      });
+      displayer.displayErrorMessages(errorMessages, titleForm);
+      errorMessages = [];
+      desactivateButton();
+    } else {
+      displayer.displayActividad();
+      actividad = document.querySelector('#actividad');
+
+      if (document.querySelector(".objetivoBtn")) {
+        var objetivoBtn = document.querySelector(".objetivoBtn");
+        objetivoBtn.addEventListener("click", function () {
+          displayer.displayObjetivo();
+          objetivo = document.querySelector('#objetivo');
+        });
+      }
     }
   }
 });
+/**SUBMIT + CALCULATE**/
+
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   var user;
@@ -642,7 +680,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61833" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58144" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
