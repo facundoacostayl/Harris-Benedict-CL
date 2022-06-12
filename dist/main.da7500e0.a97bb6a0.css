@@ -18,7 +18,7 @@ input, select {
 /*******BUTTONS*******/
 .button {
   display: block;
-  width: 60%;
+  width: 120px;
   margin: 0 auto;
   padding: 0.5rem;
   color: white;
@@ -30,10 +30,15 @@ input, select {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.9rem;
+  cursor: pointer;
 }
 
 body {
   color: white;
+}
+
+main {
+  max-width: 500px;
 }
 
 form h1 {

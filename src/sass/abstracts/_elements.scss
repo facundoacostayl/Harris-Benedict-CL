@@ -19,7 +19,7 @@
 /*******BUTTONS*******/
 %button {
     display: block;
-    width: 60%;
+    width: 120px;
     margin: 0 auto;
     padding: .5rem;
     color: white;
@@ -31,4 +31,5 @@
     text-transform: uppercase;
     font-weight: 700;
     font-size: f.$small;
+    cursor: pointer;
     }
